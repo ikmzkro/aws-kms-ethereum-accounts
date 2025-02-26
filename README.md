@@ -29,6 +29,40 @@ changes, and deploying applications.
 This section shows how to prepare the environment for running CDK and the sample code. For this walkthrough, you must
 have the following prerequisites:
 
+```
+# 1. プロジェクトディレクトリに移動
+ikmz@KoichirizunoMBP oss/aws-kms-ethereum-accounts % 
+
+# 2. 新しい仮想環境の作成
+python -m venv .venv
+
+# 3. 仮想環境のアクティベート
+source .venv/bin/activate
+(.venv) ikmz@KoichirizunoMBP oss/aws-kms-ethereum-accounts % 
+
+# 4. 必要なパッケージのインストール
+(.venv) ikmz@KoichirizunoMBP aws-kms-ethereum-accounts % pip install -r requirements.txt
+Requirement already satisfied: aws-cdk-lib==2.51.1 in ./.venv/lib/python3.10/site-packages (from -r requirements.txt (line 1)) (2.51.1)
+
+# 5. CDK のバージョン確認
+npm install -g aws-cdk
+changed 1 package in 1s
+
+# 6. デプロイ前に、CloudFormation テンプレートが正しく生成されるか確認
+rm -r cdk.out
+cdk synth
+cdk bootstrap
+cdk deploy
+
+# 7. 再度デプロイ
+cdk deploy
+
+待機しないとダメになる。
+
+# 8. リソースの削除
+cdk destroy
+```
+
 * An [AWS account](https://signin.aws.amazon.com/signin?redirect_uri=https%3A%2F%2Fportal.aws.amazon.com%2Fbilling%2Fsignup%2Fresume&client_id=signup).
 * An IAM user with administrator access
 * [Configured AWS credentials](https://docs.aws.amazon.com/cdk/latest/guide/getting_started.html#getting_started_prerequisites)
@@ -81,11 +115,11 @@ This repository represents a PoC of how Ethereum accounts (private/public key) c
 KMS can be used to create valid offline signatures on Ethereum transactions.
 
 In this simple example, a transaction is created to send some Ether from one Ethereum account to another. For testing
-purposes it is recommended to use Ethereum Rinkeby (`https://www.rinkeby.io`) network for example and to create an
+purposes it is recommended to use Ethereum sepolia (`https://www.sepolia.io`) network for example and to create an
 account via Metamask.
 
-To bootstrap the AWS KMS-CMK based Ethereum account, the Rinkeby crypto faucet can be
-used (https://www.rinkeby.io/#faucet).
+To bootstrap the AWS KMS-CMK based Ethereum account, the sepolia crypto faucet can be
+used (https://www.sepolia.io/#faucet).
 
 ---------------------
 
