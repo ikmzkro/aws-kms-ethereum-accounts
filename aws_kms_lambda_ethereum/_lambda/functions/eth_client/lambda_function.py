@@ -28,7 +28,7 @@ def lambda_handler(event, context):
 
     operation = event.get('operation')
     if not operation:
-        raise ValueError('operation needs to be specified in request and needs to be eigher "status" or "send"')
+        raise ValueError('operation needs to be specified in request and needs to be eigher "status" or "send" or "submit"')
 
     # {"operation": "status"}
     if operation == 'status':
@@ -77,3 +77,21 @@ def lambda_handler(event, context):
                                     eth_checksum_addr=eth_checksum_addr)
 
         return {"signed_tx": raw_tx_signed}
+
+    elif operation == 'submit':
+        signed_tx = event.get('signed_tx')
+        if not signed_tx:
+            return {'operation': 'submit',
+                    'error': 'missing parameter - submit requires signed_tx to be specified'}
+
+        # ここでブロックチェーンにトランザクションを送信する処理を追加
+        # 例: web3.pyを使用してトランザクションを送信
+        from web3 import Web3
+
+        # Web3のインスタンスを作成
+        w3 = Web3(Web3.HTTPProvider(os.getenv('ETH_NODE_URL')))
+
+        # トランザクションを送信
+        tx_hash = w3.eth.sendRawTransaction(signed_tx)
+
+        return {'operation': 'submit', 'tx_hash': tx_hash.hex()}
