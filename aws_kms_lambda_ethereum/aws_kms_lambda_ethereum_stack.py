@@ -53,7 +53,7 @@ class EthLambda(Construct):
 
 class AwsKmsLambdaEthereumStack(Stack):
 
-    def __init__(self, scope: Construct, construct_id: str, eth_network: str = 'rinkeby', **kwargs) -> None:
+    def __init__(self, scope: Construct, construct_id: str, eth_network: str = 'sepolia', **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
         cmk = aws_kms.Key(self, "eth-cmk-identity",
